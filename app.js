@@ -2,9 +2,13 @@ const express = require("express"); //requires the express module
 
 var request = require('request'); //used for http request in this case
 
+var fs = require('fs');
+
 const converter = require('json-2-csv'); //passes json to csv
 
 const axios = require('axios'); //requires the axios module which helps in making get and post requests from API
+
+const execa = require('execa');
 
 const https = require("https"); //works similarly like the axios module
 
@@ -36,7 +40,7 @@ app.post("/", function(req, res) {
 
   var symbol = req.body.company; //the company symbol which the user enters
   var url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&datatype=csv&symbol=" + symbol + "&apikey=E3SOUHEOPD38CMZ4"; //api url
-
+  var csv="";
   //generates request for
   request.get({
     url: url,
@@ -49,8 +53,15 @@ app.post("/", function(req, res) {
     } else if (res.statusCode !== 200) {
       console.log('Status:', res.statusCode);
     } else {
-      // data is successfully parsed as a JSON object:
+      // data is successfully parsed as a csv object:
       console.log(data);
+      const subprocess = execa('python', ['./test.py',data]);
+       subprocess.stdout.pipe(process.stdout);
+       (async () => {
+         const {stdout} = await subprocess;
+         // Returning Result
+         console.log('child output:', stdout.toString());
+      })();
 
       //if json to csv but data is already recieved in csv
       //------------------------------------------
@@ -67,6 +78,5 @@ app.post("/", function(req, res) {
 
     }
   });
-
-
+// res.redirect("/");
 });
