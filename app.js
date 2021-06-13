@@ -66,13 +66,11 @@ app.post("/", function(req, resp) {
       const subprocess = execa('python', ['./test.py', data]);
       subprocess.stdout.pipe(process.stdout);
       (async () => {
-        const {
-          stdout
-        } = await subprocess;
-        // Returning Result
-        console.log('child output:', stdout.toString());
-        resp.render("result");
-      })();
+    const {stdout} = await subprocess;
+    // Returning Result
+    console.log('child output:', stdout.toString());
+    resp.render("result");
+})();
 
       //if json to csv but data is already recieved in csv
       //------------------------------------------
