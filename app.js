@@ -35,12 +35,11 @@ app.get("/", function(req, res) {
 app.post("/", function(req, res) {
 
   var symbol = req.body.company; //the company symbol which the user enters
-  var url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" + symbol + "&apikey=E3SOUHEOPD38CMZ4"; //api url
+  var url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&datatype=csv&symbol=" + symbol + "&apikey=E3SOUHEOPD38CMZ4"; //api url
 
   //generates request for
   request.get({
     url: url,
-    json: true,
     headers: {
       'User-Agent': 'request'
     }
@@ -52,16 +51,19 @@ app.post("/", function(req, res) {
     } else {
       // data is successfully parsed as a JSON object:
       console.log(data);
-      // convert JSON array to CSV string
-      converter.json2csv(data, (err, csv) => {
-        if (err) {
-          throw err;
-        }
 
-        // print CSV string
-        console.log(csv);
-      });
-
+      //if json to csv but data is already recieved in csv
+      //------------------------------------------
+      // convert JSON array to CSV string        |
+      // converter.json2csv(data, (err, csv) => {|
+      //   if (err) {                            |
+      //     throw err;                          |
+      //   }                                     |
+      //                                         |
+      //   // print CSV string                   |
+      //   console.log(csv);                     |
+      // });                                     |
+      //------------------------------------------
 
     }
   });
