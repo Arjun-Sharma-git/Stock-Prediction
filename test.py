@@ -42,52 +42,52 @@ finally:
 # warnings.filterwarnings('ignore')
 
 
-my_data_str = sys.argv[1]
+data = sys.argv[1]
+my_data_new = pd.DataFrame([x.split(',') for x in data.split('\n')])
+# print(my_data_new.columns)
 
-my_data_list_tmp = my_data_str.split('\r')      # breaking into list
-my_data_list_tmp.pop()
+# my_data_list_tmp = my_data_str.split('\r')      # breaking into list
+# my_data_list_tmp.pop()
 
-my_data_list_tmp2 = []          # this will break each list to form rows and columns
-for st in my_data_list_tmp:
-    my_st = st.split(',')
+# my_data_list_tmp2 = []          # this will break each list to form rows and columns
+# for st in my_data_list_tmp:
+#     my_st = st.split(',')
 
-    my_data_list_tmp2.append(my_st);
+#     my_data_list_tmp2.append(my_st);
 
-R = len(my_data_list_tmp2)
-C = len(my_data_list_tmp2[0])
-for i in range(1,R):
-    prev_text = my_data_list_tmp2[i][0]
+# R = len(my_data_list_tmp2)
+# C = len(my_data_list_tmp2[0])
+# for i in range(1,R):
+#     prev_text = my_data_list_tmp2[i][0]
 
-    # replace the \n from the dates
-    new_text = prev_text[1:]
-    my_data_list_tmp2[i][0] = my_data_list_tmp2[i][0].replace(prev_text, new_text) 
+#     # replace the \n from the dates
+#     new_text = prev_text[1:]
+#     my_data_list_tmp2[i][0] = my_data_list_tmp2[i][0].replace(prev_text, new_text) 
 
-    # changing the data types of the rest columns other than dates to float 
-    for j in range(1,C):
-        my_data_list_tmp2[i][j] = float(my_data_list_tmp2[i][j])
+#     # changing the data types of the rest columns other than dates to float 
+#     for j in range(1,C):
+#         my_data_list_tmp2[i][j] = float(my_data_list_tmp2[i][j])
 
-my_data_new = pd.DataFrame(my_data_list_tmp2)
-# print(my_data_new.shape)
+# my_data_new = pd.DataFrame(my_data_list_tmp2)
+# # print(my_data_new.shape)
 
 my_data_new.columns = my_data_new.iloc[0]
-
-my_data_new = my_data_new.drop(columns = ['dividend_amount', 'split_coefficient'])
-
-my_data_new = my_data_new.iloc[::-1]
-
-my_data_new = my_data_new.reset_index(drop = True)
-
-my_data_new.drop(100, axis = 0, inplace = True)
+my_data_new = my_data_new.drop(columns = ['dividend_amount', 'split_coefficient\r'])
+my_data_new.drop(0, axis = 0, inplace = True)
+my_data_new.drop(101, axis = 0, inplace = True)
+my_data_new = my_data_new.iloc[::-1]        # reverse all rows
+my_data_new.reset_index(drop = True, inplace = True)
 
 for i in range(0, len(my_data_new.columns)):
     my_data_new.iloc[:,i] = pd.to_numeric(my_data_new.iloc[:,i], errors='ignore')
 
-plt.figure(figsize=(20, 10))
-plt.plot(my_data_new.timestamp, my_data_new.close)
-plt.savefig('fig_closing_price.png')
 
 # Plotting work
 plt.style.use('seaborn')
+
+plt.figure(figsize=(20, 10))
+plt.plot(my_data_new.timestamp, my_data_new.close)
+plt.savefig('fig_closing_price.png')
 
 def mean_absolute_percentage_error(y_true, y_pred):
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
@@ -122,10 +122,11 @@ def plot_moving_average(series, window, plot_intervals=False, scale=1.96):
 rolling_mean = plot_moving_average(my_data_new.close, 5, True)
 
 # prediction
+r,c = my_data_new.shape
 y2 = rolling_mean.iloc[-1]
-x2 = 99
+x2 = r-1
 y1 = rolling_mean.iloc[-2]
-x1 = 98
+x1 = r-2
 
 def prediction_closing_price(x1, y1, x2, y2, X = x2 + 1):
     slope = (y2 - y1) / (x2 - x1)
