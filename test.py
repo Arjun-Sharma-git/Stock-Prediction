@@ -62,9 +62,9 @@ my_data_new = pd.DataFrame([x.split(',') for x in data.split('\n')])
 
 #     # replace the \n from the dates
 #     new_text = prev_text[1:]
-#     my_data_list_tmp2[i][0] = my_data_list_tmp2[i][0].replace(prev_text, new_text) 
+#     my_data_list_tmp2[i][0] = my_data_list_tmp2[i][0].replace(prev_text, new_text)
 
-#     # changing the data types of the rest columns other than dates to float 
+#     # changing the data types of the rest columns other than dates to float
 #     for j in range(1,C):
 #         my_data_list_tmp2[i][j] = float(my_data_list_tmp2[i][j])
 
@@ -87,7 +87,7 @@ plt.style.use('seaborn')
 
 plt.figure(figsize=(20, 10))
 plt.plot(my_data_new.timestamp, my_data_new.close)
-plt.savefig('fig_closing_price.png')
+plt.savefig('public/fig_closing_price.png')
 
 def mean_absolute_percentage_error(y_true, y_pred):
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
@@ -99,7 +99,7 @@ def plot_moving_average(series, window, plot_intervals=False, scale=1.96):
     plt.figure(figsize=(17,8))
     plt.title('Moving average\n window size = {}'.format(window))
     plt.plot(rolling_mean, 'g', label='Rolling mean trend')
-   
+
     #Plot confidence intervals for smoothed values
     if plot_intervals:
         mae = mean_absolute_error(series[window:], rolling_mean[window:])
@@ -108,16 +108,16 @@ def plot_moving_average(series, window, plot_intervals=False, scale=1.96):
         upper_bound = rolling_mean + (mae + scale * deviation)
         plt.plot(upper_bound, 'r--', label='Upper bound / Lower bound')
         plt.plot(lower_bound, 'r--')
-           
+
     plt.plot(series[window:], label='Actual values')
-    plt.legend(loc='best')  
+    plt.legend(loc='best')
     plt.grid(True)
     plt.xticks(rotation = 90)
-    plt.savefig('fig_prediction.png')
+    plt.savefig('public/fig_prediction.png')
     #plt.show()
-    
+
     return rolling_mean
-   
+
 # Smooth by the previous 5 days (by week)
 rolling_mean = plot_moving_average(my_data_new.close, 5, True)
 
