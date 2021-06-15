@@ -72,7 +72,10 @@ app.post("/", function(req, resp) {
       //   (async () => {
       // const {stdout} = await subprocess;
 
-      const python = spawn('python', ['test.py', info]);
+      // this please_plot is a string made by combining the plots needed by user
+      // var please_plot = "close open low"
+      var please_plot = "close"
+      const python = spawn('python', ['test.py', info, please_plot]);
       // collect data from script
       python.stdout.on('data', function(data) {
         console.log('Pipe data from python script ...');
