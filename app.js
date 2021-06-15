@@ -16,7 +16,9 @@ const https = require("https"); //works similarly like the axios module
 
 const bodyParser = require("body-parser"); //body-parser helps in prsing all the data to the backend which the user enters
 
-const {spawn} = require('child_process');
+const {
+  spawn
+} = require('child_process');
 
 var app = express();
 
@@ -65,28 +67,28 @@ app.post("/", function(req, resp) {
     } else {
       // data is successfully parsed as a csv object:
       // console.log(data);
-    //   const subprocess = execa('python', ['./test.py', data]);
-    //   subprocess.stdout.pipe(process.stdout);
-    //   (async () => {
-    // const {stdout} = await subprocess;
+      //   const subprocess = execa('python', ['./test.py', data]);
+      //   subprocess.stdout.pipe(process.stdout);
+      //   (async () => {
+      // const {stdout} = await subprocess;
 
-    const python = spawn('python', ['test.py',info]);
-// collect data from script
-      python.stdout.on('data', function (data) {
-       console.log('Pipe data from python script ...');
-       dataToSend = data.toString();
-       console.log(dataToSend);
+      const python = spawn('python', ['test.py', info]);
+      // collect data from script
+      python.stdout.on('data', function(data) {
+        console.log('Pipe data from python script ...');
+        dataToSend = data.toString();
+        console.log(dataToSend);
       });
       // in close event we are sure that stream from child process is closed
       python.on('close', (code) => {
-      console.log(`child process close all stdio with code ${code}`);
-// send data to browser
-});
+        console.log(`child process close all stdio with code ${code}`);
+        // send data to browser
+      });
 
 
 
-    // // Returning Result
-    // console.log('child output:', stdout.toString()
+      // // Returning Result
+      // console.log('child output:', stdout.toString()
 
       //if json to csv but data is already recieved in csv
       //------------------------------------------
@@ -103,5 +105,5 @@ app.post("/", function(req, resp) {
 
     }
   });
-resp.render("result");
+  resp.render("result");
 });
