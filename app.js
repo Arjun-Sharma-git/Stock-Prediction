@@ -72,13 +72,14 @@ app.post("/", function(req, resp) {
       //   (async () => {
       // const {stdout} = await subprocess;
 
-      var plotType=req.body.plot;
+      var plotType="open close";
       const python = spawn('python', ['test.py',info, plotType]);
       // collect data from script
       python.stdout.on('data', function(data) {
         console.log('Pipe data from python script ...');
         dataToSend = data.toString();
         console.log(dataToSend);
+        resp.render("result");
       });
       // in close event we are sure that stream from child process is closed
       python.on('close', (code) => {
@@ -106,5 +107,5 @@ app.post("/", function(req, resp) {
 
     }
   });
-  resp.render("result");
+
 });
