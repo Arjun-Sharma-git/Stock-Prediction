@@ -85,14 +85,10 @@ for i in range(0, len(my_data_new.columns)):
 # Plotting work
 plt.style.use('seaborn')
 
-plt.figure(figsize=(20, 10))
-plt.plot(my_data_new.timestamp, my_data_new.close)
-plt.savefig('public/fig_closing_price.png')
-
 def mean_absolute_percentage_error(y_true, y_pred):
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
 
-def plot_moving_average(series, window, plot_intervals=False, scale=1.96):
+def plot_moving_average(series, window, my_name, plot_intervals=False, scale=1.96):
 
     rolling_mean = series.rolling(window=window).mean()
 
@@ -113,38 +109,130 @@ def plot_moving_average(series, window, plot_intervals=False, scale=1.96):
     plt.legend(loc='best')
     plt.grid(True)
     plt.xticks(rotation = 90)
-    plt.savefig('public/fig_prediction.png')
+
+    file_name = "fig_prediction" + my_name + ".png"
+    plt.savefig("public/fig_prediction" + my_name + ".png")
     #plt.show()
 
     return rolling_mean
 
 # Smooth by the previous 5 days (by week)
-rolling_mean = plot_moving_average(my_data_new.close, 5, True)
+def my_prediction(x1, y1, x2, y2, X):
+    slope = (y2 - y1) / (x2 - x1)
+    y = y1 + slope * (X - x1)
+    return (y, slope)
 
-# prediction
+def mood(slope):
+    if(slope >= 0):
+        return "Up"
+    else:
+        return "Down"
+
+result_prediction = ""
+
+# CLOSING PRICE
+plt.figure(figsize=(20, 10))
+plt.plot(my_data_new.timestamp, my_data_new.close)
+plt.savefig('public/fig_closing_price.png')
+rolling_mean = plot_moving_average(my_data_new.close, 5, "closing", True)
+
 r,c = my_data_new.shape
 y2 = rolling_mean.iloc[-1]
 x2 = r-1
 y1 = rolling_mean.iloc[-2]
 x1 = r-2
 
-def prediction_closing_price(x1, y1, x2, y2, X = x2 + 1):
-    slope = (y2 - y1) / (x2 - x1)
-    y = y1 + slope * (X - x1)
-    return (y, slope)
+prediction, slope = my_prediction(x1, y1, x2, y2, x2+1)
 
-prediction, slope = prediction_closing_price(x1, y1, x2, y2)
+# adding the results to result_prediction
+result_prediction += str(prediction) + "%" + mood(slope) + "%"
+
+# OPENING PRICE
+plt.figure(figsize=(20, 10))
+plt.plot(my_data_new.timestamp, my_data_new.open)
+plt.savefig('public/fig_opening_price.png')
+rolling_mean = plot_moving_average(my_data_new.open, 5, "opening", True)
+
+r,c = my_data_new.shape
+y2 = rolling_mean.iloc[-1]
+x2 = r-1
+y1 = rolling_mean.iloc[-2]
+x1 = r-2
+
+prediction_tmp, slope = my_prediction(x1, y1, x2, y2, x2+1)
+
+# adding the results to result_prediction
+result_prediction += str(prediction) + "%" + mood(slope) + "%"
+
+# HIGH
+plt.figure(figsize=(20, 10))
+plt.plot(my_data_new.timestamp, my_data_new.high)
+plt.savefig('public/fig_high_price.png')
+rolling_mean = plot_moving_average(my_data_new.high, 5, "high", True)
+
+r,c = my_data_new.shape
+y2 = rolling_mean.iloc[-1]
+x2 = r-1
+y1 = rolling_mean.iloc[-2]
+x1 = r-2
+
+prediction, slope = my_prediction(x1, y1, x2, y2, x2+1)
+
+# adding the results to result_prediction
+result_prediction += str(prediction) + "%" + mood(slope) + "%"
+
+# LOW
+plt.figure(figsize=(20, 10))
+plt.plot(my_data_new.timestamp, my_data_new.low)
+plt.savefig('public/fig_low_price.png')
+rolling_mean = plot_moving_average(my_data_new.low, 5, "closing", True)
+
+r,c = my_data_new.shape
+y2 = rolling_mean.iloc[-1]
+x2 = r-1
+y1 = rolling_mean.iloc[-2]
+x1 = r-2
+
+prediction, slope = my_prediction(x1, y1, x2, y2, x2+1)
+
+# adding the results to result_prediction
+result_prediction += str(prediction) + "%" + mood(slope) + "%"
+
+# ADJUSTED PRICE
+plt.figure(figsize=(20, 10))
+plt.plot(my_data_new.timestamp, my_data_new.adjusted_close)
+plt.savefig('public/fig_adjusted_close_price.png')
+rolling_mean = plot_moving_average(my_data_new.close, 5, "adjusted_close", True)
+
+r,c = my_data_new.shape
+y2 = rolling_mean.iloc[-1]
+x2 = r-1
+y1 = rolling_mean.iloc[-2]
+x1 = r-2
+
+prediction, slope = my_prediction(x1, y1, x2, y2, x2+1)
+
+# adding the results to result_prediction
+result_prediction += str(prediction) + "%" + mood(slope) + "%"
+
+# VOLUME
+plt.figure(figsize=(20, 10))
+plt.plot(my_data_new.timestamp, my_data_new.volume)
+plt.savefig('public/fig_volume.png')
+rolling_mean = plot_moving_average(my_data_new.volume, 5, "volume", True)
+
+r,c = my_data_new.shape
+y2 = rolling_mean.iloc[-1]
+x2 = r-1
+y1 = rolling_mean.iloc[-2]
+x1 = r-2
+
+prediction, slope = my_prediction(x1, y1, x2, y2, x2+1)
+
+# adding the results to result_prediction
+result_prediction += str(prediction) + "%" + mood(slope)
 
 # returning the results
-
-market_mood = ""
-if(slope >= 0):
-    market_mood = "Up"
-else:
-    market_mood = "Down"
-
-result_string = str(prediction) + "%" + market_mood
-
-print(result_string)
+print(result_prediction)
 
 sys.stdout.flush
