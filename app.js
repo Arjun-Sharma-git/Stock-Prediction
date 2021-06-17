@@ -72,8 +72,8 @@ app.post("/", function(req, resp) {
       //   (async () => {
       // const {stdout} = await subprocess;
 
-      var plotType="open close";
-      const python = spawn('python', ['test.py',info, plotType]);
+      var plotType = req.body.plot;
+      const python = spawn('python', ['test.py', info, plotType]);
       // collect data from script
       python.stdout.on('data', function(data) {
         console.log('Pipe data from python script ...');
