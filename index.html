@@ -1,21 +1,188 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title></title>
-</head>
+  <title>Stock Predictor</title>
+  <meta charset="utf-+8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="styles.css" type="text/css">
+  <link rel="icon" href="animated_favicon1.gif" type="image/gif">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<body>
-  <form class="" action="/" method="post">
-    <label for="">Company Name</label>
-    <input type="text" name="company" value="">
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#myPage">Logo</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#about">ABOUT</a></li>
+          <li><a href="#user1">USER</a></li>
+          <li><a href="#contact">CONTACT</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+<div style="background-color: #eee" class="jumbotron text-center">
+
+  <h1 >Stock Predictor</h1>
+  <p>A Mathematical Stock Predictor</p>
+
+</div>
+
+<!-- Container (About Section) -->
+<div style="background-color: #91ffff" id="about" class="container-fluid">
+
+  <div class="row">
+    <div class="col-sm-8">
+      <h3>About Stock Predictor</h3><br>
+      <h4 class="about-margin3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>
+      <br>
+    </div>
+    <div class="col-sm-4">
+      <span> <img src="bloomberg-stock-market-share-price.png" alt="stock-price-up-png" type="image/png"> </span>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Container (User type Section) -->
+<div style="background-color: #91ffc6 " id="user1" class="container-fluid">
+  <div class="text-center">
+    <h2>User</h2>
+    <h4>Choose a user type that works for you</h4>
+  </div>
+  <div class="row slideanim">
+    <div class="col-sm-6 col-xs-12">
+      <div class="panel panel-default text-center">
+        <div class="panel-heading">
+          <h1>Basic</h1>
+        </div>
+        <div class="panel-body">
+          <h3> Just the bare minimum about the opening and closing prices.<h3>
+        </div>
+        <div class="panel-footer">
+          <br><br><br><br>
+          <a href="Basic.html" class="btn btn-lg">Basic</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+      <div class="panel panel-default text-center">
+        <div class="panel-heading">
+          <h1>Advance</h1>
+        </div>
+        <div class="panel-body">
+          <h3> View all prediction related charts.<h3>
+
+        </div>
+        <div class="panel-footer">
+          <br><br><br><br>
+          <a href="Advanced.html" class="btn btn-lg">Advanced</a>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>
+
+<!-- Container (Contact Section) -->
+<div id="contact" class="container-fluid ">
+  <h2 class="text-center">CONTACT</h2>
+  <br>
+  <div class="row">
+    <div class="col-sm-5">
+      <p><span class="glyphicon glyphicon-map-marker"></span> Gurgaon,IN</p>
+      <p><span class="glyphicon glyphicon-phone"></span> 9988776655</p>
+      <p><span class="glyphicon glyphicon-envelope"></span> email@domain.con</p>
+    </div>
+    <div class="col-sm-7 slideanim">
+      <div class="row">
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+        </div>
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+        </div>
+      </div>
+      <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <button class="btn btn-default pull-right" type="submit">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer class="container-fluid text-center">
+  <a href="#myPage" title="To Top">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a>
+  <div class="center">
+    <p class="center">This project was made by sanaskari bois <br></p>
     <br>
-    <label for="">Prediction Type</label>
-    <input type="text" name="plot" value="">
-    <button type="submit" name="button">GO!</button>
-  </form>
+    <img src="GitHub.png" alt="Github catto" type="image/png" ><br><br>
+    <a href="https://github.com/Arjun-Sharma-git/Stock-Prediction" title="">Github</a></p>
+  </div>
+
+
+</footer>
+
+<script>
+$(document).ready(function(){
+  // Add smooth scrolling to all links in navbar + footer link
+  $(".navbar a, footer a[href='#Index.html']").on('click', function(event) {
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 900, function(){
+
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+
+  $(window).scroll(function() {
+    $(".slideanim").each(function(){
+      var pos = $(this).offset().top;
+
+      var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+    });
+  });
+})
+</script>
 
 </body>
-
 </html>
